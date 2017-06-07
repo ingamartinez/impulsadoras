@@ -59,6 +59,7 @@
                             <th> Valor Compra</th>
                             @if(Auth::user()->rol->id===2)
                                 <th> Impulsador</th>
+
                             @endif
 
                             </thead>
