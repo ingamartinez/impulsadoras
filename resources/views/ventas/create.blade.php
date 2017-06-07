@@ -208,7 +208,7 @@
                             <div class="col-lg-3 col-md-4">
                                 <div class="form-group has-feedback">
                                     <label for="mov_portado">Movil Portado</label>
-                                    <input type="number" class="form-control" id="mov_portado" name="mov_portado" placeholder="" min="3333333333" max="4444444444" data-error="Debe contener 10 digitos">
+                                    <input type="number" class="form-control" id="mov_portado" name="mov_portado" placeholder="" min="3000000000" max="3300000000" data-error="Debe contener 10 digitos">
                                     <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
                                     <div class="help-block with-errors"></div>
                                 </div></div>
@@ -248,7 +248,7 @@
     $('#validate').on('click', function (e) {
         e.preventDefault();
 
-        let idpdv = $('#idpdv').val();
+        var idpdv = $('#idpdv').val();
         if(idpdv===""){
             idpdv=0;
         }
@@ -285,7 +285,7 @@
         });
     }
     function limpiarPuntoDeVenta() {
-        let form = $('#formRegistrarGoBlue');
+        var form = $('#formRegistrarGoBlue');
         form.find('input').val('');
         form.find('textarea').val('');
         form.validator("validate");

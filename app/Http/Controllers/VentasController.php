@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\FormGuardarVenta;
 use App\Venta;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -14,18 +15,31 @@ class VentasController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        if (Auth::user()->rol->id===1){
-            $ventas = Venta::where('for_users_id',Auth::user()->id)->get();
+        $fechaInicial=$request->input('fechaInicial');
+        $fechaFinal=$request->input('fechaFinal');
 
-            return view('ventas.index',compact('ventas'));
+        if (!isset($fechaInicial) or !isset($fechaInicial)){
+            $fechaInicial=Carbon::now()->previous(Carbon::THURSDAY)->toDateString();
+            $fechaFinal=Carbon::now()->next(Carbon::THURSDAY)->toDateString();
+        }
+
+        if (Auth::user()->rol->id===1){
+            $ventas = Venta::where('for_users_id','=',Auth::user()->id)
+                ->where('fecha_venta','>=',$fechaInicial)
+                ->where('fecha_venta','<=',$fechaFinal)
+                ->get();
+
+            return view('ventas.index',compact('ventas','fechaInicial','fechaFinal'));
         }
 
         if (Auth::user()->rol->id===2){
-            $ventas = Venta::all();
+            $ventas = Venta::where('fecha_venta','>=',$fechaInicial)
+                ->where('fecha_venta','<=',$fechaFinal)
+                ->get();
 
-            return view('ventas.index',compact('ventas'));
+            return view('ventas.index',compact('ventas','fechaInicial','fechaFinal'));
         }
 
 

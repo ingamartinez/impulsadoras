@@ -24,14 +24,16 @@ class FormGuardarVenta extends FormRequest
     public function rules()
     {
         return [
-            'mov_tigo' => 'required|unique:tabla_ventas,movil_tigo'
+            'mov_tigo' => 'required|unique:tabla_ventas,movil_tigo',
+            'mov_portado' => 'nullable|unique:tabla_ventas,movil_portado'
         ];
     }
 
     public function messages()
     {
         return [
-            'mov_tigo.unique' => 'El número móvil TIGO ya fue ingresado anteriormente'
+            'mov_tigo.unique' => 'El número móvil TIGO ya fue ingresado anteriormente',
+            'mov_portado.unique' => 'El número móvil Portado ya fue ingresado anteriormente'
         ];
     }
 }
