@@ -63,7 +63,7 @@
                             <div class="col-lg-4 col-md-4">
                                 <div class="form-group has-feedback">
                                     <label for="idpdv">ID PDV</label>
-                                    <input type="number" class="form-control" id="idpdv" name="idpdv" placeholder="Ingrese ID PDV" value="10648" required>
+                                    <input type="number" class="form-control" id="idpdv" name="idpdv" placeholder="Ingrese ID PDV" value="" required>
                                     <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
                                     <div class="help-block with-errors">Si la venta no se ejecuta en un punto de venta, es decir que se hace una VENTA DIRECTA, no se ingresa ID Pdv sino el # 0</div>
                                     <button type="button" style="margin-top: 5px;" class="btn btn-primary center-block"
@@ -240,7 +240,7 @@
         moment.locale('es');
         $('#periodo').bootstrapMaterialDatePicker({
             time: false,
-            format: 'YYYY-MM-DD HH:mm:ss',
+            format: 'YYYY-MM-DD',
             setDate: moment()
         });
     });

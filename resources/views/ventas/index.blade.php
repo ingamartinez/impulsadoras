@@ -89,7 +89,8 @@
                                         <th> Impulsador</th>
 
                                     @endif
-                                    <th>Fecha</th>
+                                    <th>Fecha Evento</th>
+                                    <th>Fecha Registro</th>
 
                                     </thead>
                                     <tbody>
@@ -109,6 +110,7 @@
                                                 <td> {{$venta->user->nombre}}</td>
                                             @endif
                                             <td>{{$venta->fecha_venta}}</td>
+                                            <td>{{$venta->created_at}}</td>
                                         </tr>
                                     @endforeach
                                     </tbody>
