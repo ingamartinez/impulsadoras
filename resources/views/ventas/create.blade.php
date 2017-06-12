@@ -41,7 +41,7 @@
         </div>
     @endif
 
-    <form method="POST" action="{{route('ventas.store')}}" id="formRegistrarGoBlue" role="form" data-toggle="validator" autocomplete="off">
+    <form method="POST" action="{{route('ventas.store')}}" id="formRegistrarVentas" role="form" data-toggle="validator" autocomplete="off">
 
         {{method_field('POST')}}
 
@@ -63,7 +63,7 @@
                             <div class="col-lg-4 col-md-4">
                                 <div class="form-group has-feedback">
                                     <label for="idpdv">ID PDV</label>
-                                    <input type="number" class="form-control" id="idpdv" name="idpdv" placeholder="Ingrese ID PDV" value="" required>
+                                    <input type="number" class="form-control" id="idpdv" name="idpdv" placeholder="Ingrese ID PDV" required>
                                     <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
                                     <div class="help-block with-errors">Si la venta no se ejecuta en un punto de venta, es decir que se hace una VENTA DIRECTA, no se ingresa ID Pdv sino el # 0</div>
                                     <button type="button" style="margin-top: 5px;" class="btn btn-primary center-block"
@@ -74,7 +74,7 @@
 
                             <div class="col-lg-3 col-md-4">
                                 <div class="form-group has-feedback">
-                                    <label for="periodo">Periodo</label>
+                                    <label for="periodo">Fecha del Evento</label>
                                     <input type="text" class="form-control" id="periodo" name="periodo" placeholder="" required>
                                     <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
                                     <div class="help-block with-errors"></div>
@@ -222,7 +222,7 @@
                                 </div>
                             </div>
                         </div>
-                        <button type="submit" form="formRegistrarGoBlue" class="btn btn-success">Guardar</button>
+                        <button type="submit" form="formRegistrarVentas" class="btn btn-success">Guardar</button>
                     </div>
                 </div>
             </div>
@@ -249,9 +249,7 @@
         e.preventDefault();
 
         var idpdv = $('#idpdv').val();
-        if(idpdv===""){
-            idpdv=0;
-        }
+
         validarDMS(idpdv);
 
     });
@@ -285,9 +283,18 @@
         });
     }
     function limpiarPuntoDeVenta() {
-        var form = $('#formRegistrarGoBlue');
-        form.find('input').val('');
-        form.find('textarea').val('');
+        var form = $('#formRegistrarVentas');
+        $('#idpdv').val('');
+        $('#cod_sub').val('');
+        $('#nombre').val('');
+        $('#circuito').val('');
+        $('#vendedor').val('');
+        $('#tipo_punto').val('');
+        $('#epin').val('');
+        $('#simcard').val('');
+        $('#tigo_gestion').val('');
+        $('#zona').val('');
+        $('#estado').val('');
         form.validator("validate");
     }
 </script>
