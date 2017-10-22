@@ -21,8 +21,8 @@ class VentasController extends Controller
         $fechaFinal=$request->input('fechaFinal');
 
         if (!isset($fechaInicial) or !isset($fechaInicial)){
-            $fechaInicial=Carbon::now()->previous(Carbon::THURSDAY)->toDateString();
-            $fechaFinal=Carbon::now()->next(Carbon::THURSDAY)->toDateString();
+            $fechaInicial=Carbon::now()->previous(Carbon::SATURDAY)->toDateString();
+            $fechaFinal=Carbon::now()->next(Carbon::SATURDAY)->toDateString();
         }
 
         if (Auth::user()->rol->id===1){

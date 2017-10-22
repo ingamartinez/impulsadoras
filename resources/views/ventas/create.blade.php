@@ -188,6 +188,7 @@
                                         <option value="bolsa">Bolsa</option>
                                         <option value="plan_pos">Plan Pospago</option>
                                         <option value="paq_4mil">Paquete de $4000 (Gross Automatico)</option>
+                                        <option value="telefono">Telefono</option>
                                         <option value="ninguno">Ninguno</option>
                                     </select>
                                     <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
@@ -241,7 +242,8 @@
         $('#periodo').bootstrapMaterialDatePicker({
             time: false,
             format: 'YYYY-MM-DD',
-            setDate: moment()
+            setDate: moment(),
+            maxDate: moment()
         });
     });
 

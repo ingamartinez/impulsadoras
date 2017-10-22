@@ -14,7 +14,7 @@ class DMSController extends Controller
      */
     public function index()
     {
-        $dmss = Dms::all();
+        $dmss = Dms::where('estado','=','VENDE')->get();
         return view('dms.index',compact('dmss'));
     }
 
