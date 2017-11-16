@@ -65,6 +65,7 @@
                                 <div class="form-group">
                                     <br>
                                     <button type="submit" form="formFiltrarFecha" class="btn btn-success">Filtrar</button>
+                                    <button type="button" form="formFiltrarFecha" id="liquidacion" data-toggle="modal" data-target="#modal_agregar_arduino" class="btn btn-info">Generar liquidación</button>
                                 </div>
                             </div>
                         </div>
@@ -124,6 +125,8 @@
     </div><!--/row-->
 @endsection
 
+@include('ventas.includes.importarcsv')
+
 @push('script')
     <script>
         $(document).ready(function () {
@@ -164,7 +167,9 @@
                 }]
             });
 
+            $('#liquidacion').on('click',function () {
 
+            })
         });
     </script>
 @endpush

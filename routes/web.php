@@ -21,7 +21,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/', ['as'=>'inicio', 'uses' => 'InicioController@getInicio']);
     Route::get('logout', 'AuthController@getLogout');
 
-
+    Route::post('reporte', ['as'=>'reporte', 'uses' => 'VentasController@reporte']);
     Route::resource('ventas','VentasController');
     Route::resource('dms','DMSController');
 

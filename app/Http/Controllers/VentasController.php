@@ -7,14 +7,11 @@ use App\Venta;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Maatwebsite\Excel\Facades\Excel;
 
 class VentasController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
     public function index(Request $request)
     {
         $fechaInicial=$request->input('fechaInicial');
@@ -46,22 +43,11 @@ class VentasController extends Controller
 
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function create()
     {
         return view('ventas.create');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(FormGuardarVenta $request)
     {
 
@@ -89,48 +75,29 @@ class VentasController extends Controller
 
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
+    public function reporte(Request $request)
     {
-        //
+        $ventas = Venta::where('fecha_venta','>=','2017-07-01')
+            ->where('fecha_venta','<=','2017-07-08')
+            ->get();
+        $activaMil=null;
+
+//        dd($request->all());
+
+        Excel::filter('chunk')->load($request->file('sel_file')->getRealPath())->chunk(1000, function($results) use ($activaMil)
+        {
+//                foreach ($ventas as $venta) {
+//                    if ($results->contains('msisdn', $venta->movil_tigo)) {
+//                        $venta->validado = true;
+//                    }
+//                }
+            $activaMil = collect($results);
+
+        });
+
+
+        dd($activaMil);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
-    }
 }

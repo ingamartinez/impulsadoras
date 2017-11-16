@@ -185,7 +185,12 @@ return [
         /*
          * Fx3costa LaravelChartJs
          */
-        Fx3costa\LaravelChartJs\Providers\ChartjsServiceProvider::class
+        Fx3costa\LaravelChartJs\Providers\ChartjsServiceProvider::class,
+
+        /*
+         * Laravel Excel
+         */
+        Maatwebsite\Excel\ExcelServiceProvider::class,
 
 
     ],
@@ -240,7 +245,12 @@ return [
         /*
          * Intervention Image
          */
-        'Image' => Intervention\Image\Facades\Image::class
+        'Image' => Intervention\Image\Facades\Image::class,
+
+        /*
+         * Laravel Excel
+         */
+        'Excel' => Maatwebsite\Excel\Facades\Excel::class,
 
     ],
 
