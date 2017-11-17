@@ -6,6 +6,7 @@ use App\Http\Requests\FormGuardarVenta;
 use App\Venta;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
 use Maatwebsite\Excel\Facades\Excel;
 
@@ -77,27 +78,19 @@ class VentasController extends Controller
 
     public function reporte(Request $request)
     {
-        $ventas = Venta::where('fecha_venta','>=','2017-07-01')
-            ->where('fecha_venta','<=','2017-07-08')
-            ->get();
-        $activaMil=null;
-
-//        dd($request->all());
-
-        Excel::filter('chunk')->load($request->file('sel_file')->getRealPath())->chunk(1000, function($results) use ($activaMil)
+        Excel::filter('chunk')->load($request->file('sel_file')->getRealPath())->chunk(1000, function($results) use (&$activaMil)
         {
-//                foreach ($ventas as $venta) {
-//                    if ($results->contains('msisdn', $venta->movil_tigo)) {
-//                        $venta->validado = true;
-//                    }
-//                }
-            $activaMil = collect($results);
-
+            foreach ($results as $result) {
+                Venta::where('movil_tigo','=',$result->msisdn)->update(['validado' => true]);
+            };
         });
 
+        $ventas = Venta::where('fecha_venta','>=','2017-07-01')
+            ->where('fecha_venta','<=','2017-07-08')
+            ->where('validado','=',true)
+        ->get();
 
-        dd($activaMil);
+        dd(count($ventas));
+
     }
-
-
 }

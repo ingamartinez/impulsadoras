@@ -21,7 +21,7 @@ class AuthController extends Controller
 
         $user = \App\User::where('username', \Request::input('username'))->first();
 
-        if( $user && $user->password == \Request::input('password') && $user->estado==1)
+        if( $user && $user->password == \Request::input('password'))
         {
             if(\Request::input('remember'))
                 Auth::login($user,true);
