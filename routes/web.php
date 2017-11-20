@@ -22,6 +22,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('logout', 'AuthController@getLogout');
 
     Route::post('reporte', ['as'=>'reporte', 'uses' => 'VentasController@reporte']);
+    Route::post('liquidacion', ['as'=>'liquidacion', 'uses' => 'VentasController@generar_liquidacion']);
     Route::resource('ventas','VentasController');
     Route::resource('dms','DMSController');
 

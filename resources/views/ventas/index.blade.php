@@ -65,10 +65,20 @@
                                 <div class="form-group">
                                     <br>
                                     <button type="submit" form="formFiltrarFecha" class="btn btn-success">Filtrar</button>
-                                    <button type="button" form="formFiltrarFecha" id="liquidacion" data-toggle="modal" data-target="#modal_agregar_arduino" class="btn btn-info">Generar liquidación</button>
+                                    <button type="button" form="formFiltrarFecha" id="liquidacion" data-toggle="modal" data-target="#modal_agregar_arduino" class="btn btn-info">Validar Lineas</button>
                                 </div>
                             </div>
                         </div>
+                    </form>
+
+                    <form action="{{url('liquidacion')}}" method="POST" autocomplete="off" id="form_generar_liquidacion" name="form_generar_liquidacion">
+                        {{method_field('POST')}}
+                        {{csrf_field()}}
+                        <input type="hidden" class="form-control" name="fechaInicial" placeholder="" required value="{{$fechaInicial}}" >
+
+                        <input type="hidden" class="form-control" name="fechaFinal" placeholder="" required value="{{$fechaFinal}}" >
+
+                        <button type="submit" form="form_generar_liquidacion" id="generar_liquidacion" class="btn btn-warning">Generar Liquidación</button>
                     </form>
 
                     <div class="row">
@@ -136,7 +146,10 @@
                 weekStart : 0,
                 format: 'YYYY-MM-DD',
                 setDate: moment()
+            }).on('change', function(e, date) {
+                $('#fechainicial_archivo').val(date)
             });
+
             $('#fechaInicial').bootstrapMaterialDatePicker({
                 time: false,
                 weekStart : 0,
@@ -144,6 +157,7 @@
                 setDate: moment()
             }).on('change', function(e, date) {
                 $('#fechaFinal').bootstrapMaterialDatePicker('setMinDate', date);
+                $('#fechafinal_archivo').val(date)
             });
 
             $('#example').DataTable({
@@ -167,9 +181,7 @@
                 }]
             });
 
-            $('#liquidacion').on('click',function () {
 
-            })
         });
     </script>
 @endpush

@@ -9,9 +9,14 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
 use Maatwebsite\Excel\Facades\Excel;
+use DB;
 
 class VentasController extends Controller
 {
+    public function __construct()
+    {
+        Carbon::setLocale('es');
+    }
 
     public function index(Request $request)
     {
@@ -84,13 +89,60 @@ class VentasController extends Controller
                 Venta::where('movil_tigo','=',$result->msisdn)->update(['validado' => true]);
             };
         });
+        return redirect()->back()->with('mensajeExito', 'Se Validaron las lineas correctamente');
 
-        $ventas = Venta::where('fecha_venta','>=','2017-07-01')
-            ->where('fecha_venta','<=','2017-07-08')
-            ->where('validado','=',true)
-        ->get();
+    }
+    public function generar_liquidacion(Request $request){
+        $fechaInicial=$request->input('fechaInicial');
+        $fechaFinal=$request->input('fechaFinal');
 
-        dd(count($ventas));
+        $ventas = DB::table('tabla_ventas')
+            ->join('for_users', 'tabla_ventas.for_users_id', '=', 'for_users.id')
+            ->select(DB::raw('for_users.documento, for_users.nombre, Count(tabla_ventas.id) AS numero_lineas'))
+            ->where('tabla_ventas.validado','=',true)
+            ->where('fecha_venta','>=',$fechaInicial)
+            ->where('fecha_venta','<=',$fechaFinal)
+            ->groupBy('for_users.nombre','for_users.documento')
+            ->get();
 
+        Excel::load(public_path('excel/plantilla_impulsadoras.xlsx'),  function ($reader) use ($ventas,$fechaInicial,$fechaFinal) {
+
+            $reader->sheet('Liquidacion', function($sheet) use ($ventas,$fechaInicial,$fechaFinal) {
+
+
+                foreach ($ventas as $venta) {
+                    $sheet->prependRow(4,[
+                        $venta->documento,
+                        $venta->nombre,
+                        $venta->numero_lineas,
+                        (double) ($venta->numero_lineas)*1500,
+                    ]);
+                }
+
+                $sheet->removeRow(3);
+
+                $sheet->setCellValue(
+                    'C7',
+                    '=SUM(C3:C'.(count($ventas)+2).')'
+                );
+                $sheet->setCellValue(
+                    'D7',
+                    '=SUM(D3:D'.(count($ventas)+2).')'
+                );
+                $sheet->setAutoSize(true);
+
+                Carbon::setLocale('es');
+                $sheet->setCellValue(
+                    'E1',
+                    Carbon::now()->format('d M Y')
+                );
+
+                $sheet->setCellValue(
+                    'B1',
+                    Carbon::parse($fechaInicial)->format('d M Y').' - '.Carbon::parse($fechaFinal)->format('d M Y')
+                );
+
+            });
+        })->download('xlsx');
     }
 }

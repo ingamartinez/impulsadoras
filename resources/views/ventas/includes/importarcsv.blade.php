@@ -6,9 +6,12 @@
                 <h4 class="modal-title">Subir Archivo</h4>
             </div>
 
-            <form action="{{url('reporte')}}" method="POST" autocomplete="off" id="form_agregar_arduino" enctype="multipart/form-data">
+            <form action="{{url('reporte')}}" method="POST" autocomplete="off" id="form_agregar_archivo" enctype="multipart/form-data">
                 {{method_field('POST')}}
                 {{csrf_field()}}
+                <input type="hidden" class="form-control" id="fechainicial_archivo" name="fechaInicial" placeholder="" required value="{{$fechaInicial}}" >
+
+                <input type="hidden" class="form-control" id="fechafinal_archivo" name="fechaFinal" placeholder="" required value="{{$fechaFinal}}" >
 
                 <div class="modal-body">
                     <div class="row">
@@ -24,9 +27,17 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default waves-effect" data-dismiss="modal">Cerrar</button>
-                    <button type="submit" class="btn btn-info waves-effect waves-light">Agregar Arduino</button>
+                    <button type="submit" class="btn btn-info waves-effect waves-light">Subir Archivo</button>
                 </div>
             </form>
         </div>
     </div>
 </div><!-- /.modal -->
+
+@push('script')
+    <script>
+        $('#form_agregar_archivo').on('submit',function () {
+
+        })
+    </script>
+@endpush
